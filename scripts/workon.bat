@@ -35,7 +35,11 @@ if not "%1"=="" (
 
 if defined VIRTUAL_ENV (
     call "%VIRTUAL_ENV%\Scripts\deactivate.bat"
+    if exist "%VIRTUAL_ENV%\Scripts\postdeactivate.bat" (
+        call "%VIRTUAL_ENV%\Scripts\postdeactivate.bat"
+    )
 )
+
 
 pushd "%WORKON_HOME%" 2>NUL && popd
 if errorlevel 1 (
@@ -69,6 +73,10 @@ if exist "%WORKON_HOME%\%VENV%\%VIRTUALENVWRAPPER_PROJECT_FILENAME%" (
     if "%CHANGEDIR%"=="1" (
         cd /d "%WORKON_HOME%\%VENV%"
     )
+)
+
+if exist "%WORKON_HOME%\%VENV%\Scripts\postactivate.bat" (
+    call "%WORKON_HOME%\%VENV%\Scripts\postactivate.bat"
 )
 
 :END
